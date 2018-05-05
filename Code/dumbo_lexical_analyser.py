@@ -5,31 +5,37 @@ states = (
     ('inValue', 'exclusive')
 )
 
-tokens = ('START', 'STOP',
-          'BOOL_OP',
+tokens = ('HTLM', 'START', 'STOP',
+          'BOOL_OP', 'BOOLEAN',
           'INTEGER', 'ADD_OP', 'MULT_OP',
-          'NAME', 'ASSIGN', 'VALUE', 'APOSTROPHE', 'OPEN_PAR', 'CLOSE_PAR',
-          'COMMA', 'SEMICOLON', 'DOT'
+          'VARIABLE', 'ASSIGN', 'VALUE', 'APOSTROPHE', 'OPEN_PAR', 'CLOSE_PAR',
+          'COMMA', 'SEMICOLON', 'DOT',
+          'FOR', 'IN', 'PRINT', 'ENDFOR', 'DO', 'AND', 'OR',
           )
-# Pour ici? 'FOR', 'IN', 'PRINT', 'ENDFOR', 'DO', 'AND', 'OR','BOOLEAN', 'VALUE','TEXT', 'NAME',
 
 #Explication
 
+#HTLM: tout ce qui est avant ou apres les START/STOP dans les template, qui est donc de l'HTLM
 #START et STOP : "{{", "}}"
-#BOOL_OP: les opérations booléennes
+#BOOL_OP, BOOLEAN: les opérations booléennes, et les booléens "true" et "false"
 #INTEGER, ADD_OP, MULT_OP: un int, opérations + et -, opérations * et /
-#NAME: une variable/constante à laquelle on attribue une valeur
+#VARIABLE: le nom d'une variable
 #ASSIGN: l'opérateur assignetion ":="
 #VALUE: le(s) valeur(s) d'une variable/constante
 #APOSTROPHE: "'", début d'une VALUE
 #OPEN_PAR, CLOSE_PAR: "(", ")", début d'une liste de VALUE
 #COMMA, SEMICOLON, DOT: ",", ";", "."
+#FOR, IN, PRINT, ... : les nom résérvé par le language
 
 ##########INITIAL##########
 
 def t_START(t):
     r'{{'
     lexer.begin('inCode')
+    return t
+
+def t_HTLM(t):
+    r'[^({{)]+'
     return t
 
 t_ignore  = ' \t \n'
@@ -47,7 +53,39 @@ def t_inCode_STOP(t):
     t.lexer.begin('INITIAL')
     return t
 
-def t_inCode_NAME(t):
+def t_inCode_FOR(t):
+    r'for'
+    return t
+
+def t_inCode_ENDFOR(t):
+    r'endfor'
+    return t
+
+def t_inCode_PRINT(t):
+    r'print'
+    return t
+
+def t_inCode_IN(t):
+    r'in'
+    return t
+
+def t_inCode_DO(t):
+    r'do'
+    return t
+
+def t_inCode_AND(t):
+    r'and'
+    return t
+
+def t_inCode_OR(t):
+    r'or'
+    return t
+
+def t_inCode_BOOLEAN(t):
+    r'true|false'
+    return t
+
+def t_inCode_VARIABLE(t):
     r'\w+'
     return t
 
@@ -74,6 +112,7 @@ def t_inCode_BOOL_OP(t):
 
 def t_inCode_INTEGER(t):
     r'\d+'
+    t.value = int(t.value)
     return t
 
 def t_inCode_ADD_OP(t):
@@ -95,6 +134,7 @@ def t_inCode_SEMICOLON(t):
 def t_inCode_DOT(t):
     r'\.'
     return t
+
 
 t_inCode_ignore  = ' \n \t'
 
