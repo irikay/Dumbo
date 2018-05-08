@@ -1,17 +1,31 @@
 import ply.lex as lex
 
+#Pour sauvegarder les nom de variable et sa/ses valeurs
+variables = {}
+tmp = []
+inListe = False
+
 states = (
     ('inCode', 'exclusive'),
     ('inValue', 'exclusive')
 )
 
-tokens = ('HTLM', 'START', 'STOP',
+reserved = {
+    'for' : 'FOR',
+    'in' : 'IN',
+    'print' : 'PRINT',
+    'endfor' : 'ENDFOR',
+    'do' : 'DO',
+    'and' : 'AND',
+    'or' : 'OR'
+}
+
+tokens = ['HTLM', 'START', 'STOP',
           'BOOL_OP', 'BOOLEAN',
           'INTEGER', 'ADD_OP', 'MULT_OP',
           'VARIABLE', 'ASSIGN', 'VALUE', 'APOSTROPHE', 'OPEN_PAR', 'CLOSE_PAR',
-          'COMMA', 'SEMICOLON', 'DOT',
-          'FOR', 'IN', 'PRINT', 'ENDFOR', 'DO', 'AND', 'OR',
-          )
+          'COMMA', 'SEMICOLON', 'DOT', 'ID'
+          ] + list(reserved.values())
 
 #Explication
 
@@ -53,40 +67,18 @@ def t_inCode_STOP(t):
     t.lexer.begin('INITIAL')
     return t
 
-def t_inCode_FOR(t):
-    r'for'
-    return t
 
-def t_inCode_ENDFOR(t):
-    r'endfor'
-    return t
-
-def t_inCode_PRINT(t):
-    r'print'
-    return t
-
-def t_inCode_IN(t):
-    r'in'
-    return t
-
-def t_inCode_DO(t):
-    r'do'
-    return t
-
-def t_inCode_AND(t):
-    r'and'
-    return t
-
-def t_inCode_OR(t):
-    r'or'
+def t_inCode_VARIABLE(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value,'ID')    # On vérifie les mots reservé
+    if t.type == 'ID':
+        global tmp
+        tmp = []
+        tmp.append(t.value)
     return t
 
 def t_inCode_BOOLEAN(t):
     r'true|false'
-    return t
-
-def t_inCode_VARIABLE(t):
-    r'\w+'
     return t
 
 def t_inCode_ASSIGN(t):
@@ -100,10 +92,16 @@ def t_inCode_APOSTROPHE(t):
 
 def t_inCode_OPEN_PAR(t):
     r'\('
+    global inListe
+    inListe = True
     return t
 
 def t_inCode_CLOSE_PAR(t):
     r'\)'
+    global tmp
+    global inListe
+    inListe = False
+    variables[tmp[0]] = tmp[1:]
     return t
 
 def t_inCode_BOOL_OP(t):
@@ -135,7 +133,6 @@ def t_inCode_DOT(t):
     r'\.'
     return t
 
-
 t_inCode_ignore  = ' \n \t'
 
 def t_inCode_newline(t):
@@ -151,10 +148,14 @@ def t_inCode_error(t):
 def t_inValue_APOSTROPHE(t):
     r'\''
     t.lexer.begin('inCode')
+    if not inListe:
+        variables[tmp[0]] = tmp[1:]
     return t
 
 def t_inValue_VALUE(t):
     r'[^\']+'
+    global tmp
+    tmp.append(t.value)
     return t
 
 def t_inValue_error(t):
@@ -174,3 +175,5 @@ if __name__ == "__main__":
 
     for token in lexer:
         print("line %d:%s(%s)" % (token.lineno, token.type, token.value))
+    for cle, valeur in variables.items():
+        print("La clé {} contient la valeur {}.".format(cle, valeur))

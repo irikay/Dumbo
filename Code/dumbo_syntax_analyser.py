@@ -15,6 +15,11 @@ operations = {
     '<=': lambda x, y: x <= y
 }
 
+precedence = (
+    ('left', "BOOL_OP"),
+    ("left", "ADD_OP"),
+    ("left", "MUL_OP"),
+)
 
 def p_expression_op(p):
     ''' expression : expression ADD_OP expression
@@ -23,10 +28,7 @@ def p_expression_op(p):
     p[0] = operations[p[2]](p[1], p[3])
 
 
-precedence = (
-    ('left', "BOOL_OP"),
-    ("left", "ADD_OP"),
-    ("left", "MUL_OP"),
-)
+
+
 
 
