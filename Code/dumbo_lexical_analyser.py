@@ -55,8 +55,6 @@ def t_HTLM(t):
 t_ignore  = ' \t \n'
 
 def t_error(t):
-    print(t)
-    print(t.value[0])
     print("Character Illegal '%s'" %t.value[0])
     return t
 
@@ -163,12 +161,16 @@ def t_inValue_error(t):
     print("Character Illegal '%s'" %t.value[0])
     return t
 
-
 ###########################
+
+lexer = lex.lex()
+
+def get_variables(data):
+    return variables
+
 if __name__ == "__main__":
     import sys
 
-    lexer = lex.lex()
     file = open(sys.argv[1], 'r')
     input = file.read()
     lexer.input(input)
