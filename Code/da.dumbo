@@ -1,3 +1,5 @@
 {{
-nom := 'ISSOU'
+ville := 'ISSOU';
+habitants := '3000000';
+maire := 'Risitas';
 }}

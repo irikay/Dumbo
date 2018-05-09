@@ -1,1 +1,4 @@
-<HTLM>{{print nom;}}</HTLM>
+<Ville>{{print ville;}}<\Ville>
+<Habitants>{{print habitants;}}<\Habitants>
+<Maire>{{print maire;}}<\Maire>
+<Magasin>{{print 'Lidl';}}<\Magasin>

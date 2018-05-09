@@ -24,7 +24,7 @@ tokens = ['HTLM', 'START', 'STOP',
           'BOOL_OP', 'BOOLEAN',
           'INTEGER', 'ADD_OP', 'MULT_OP',
           'VARIABLE', 'ASSIGN', 'VALUE', 'APOSTROPHE', 'OPEN_PAR', 'CLOSE_PAR',
-          'COMMA', 'SEMICOLON', 'DOT', 'ID'
+          'COMMA', 'SEMICOLON', 'DOT'
           ] + list(reserved.values())
 
 #Explication
@@ -68,8 +68,8 @@ def t_inCode_STOP(t):
 
 def t_inCode_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value,'ID')    # On vérifie les mots reservé
-    if t.type == 'ID':
+    t.type = reserved.get(t.value,'VARIABLE')    # On vérifie les mots reservé
+    if t.type == 'VARIABLE':
         global tmp
         tmp = []
         tmp.append(t.value)
