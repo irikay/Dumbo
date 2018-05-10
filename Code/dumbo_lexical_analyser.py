@@ -70,9 +70,10 @@ def t_inCode_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # On vérifie les mots reservé
     if t.type == 'VARIABLE':
-        global tmp
-        tmp = []
-        tmp.append(t.value)
+        global variables
+        #tmp = []
+        #tmp.append(t.value)
+        variables[t.value] = []
     return t
 
 def t_inCode_BOOLEAN(t):
@@ -96,10 +97,10 @@ def t_inCode_OPEN_PAR(t):
 
 def t_inCode_CLOSE_PAR(t):
     r'\)'
-    global tmp
+    #global tmp
     global inListe
     inListe = False
-    variables[tmp[0]] = tmp[1:]
+    #variables[tmp[0]] = tmp[1:]
     return t
 
 def t_inCode_BOOL_OP(t):
@@ -131,7 +132,7 @@ def t_inCode_DOT(t):
     r'\.'
     return t
 
-t_inCode_ignore  = ' \n \t'
+t_inCode_ignore = ' \n \t'
 
 def t_inCode_newline(t):
     r'\n+'
@@ -146,14 +147,14 @@ def t_inCode_error(t):
 def t_inValue_APOSTROPHE(t):
     r'\''
     t.lexer.begin('inCode')
-    if not inListe:
-        variables[tmp[0]] = tmp[1:]
+    #if not inListe:
+    #    variables[tmp[0]] = tmp[1:]
     return t
 
 def t_inValue_VALUE(t):
     r'[^\']+'
-    global tmp
-    tmp.append(t.value)
+    #global tmp
+    #tmp.append(t.value)
     return t
 
 def t_inValue_error(t):

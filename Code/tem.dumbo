@@ -1,4 +1,4 @@
-<Ville>{{print ville;}}<\Ville>
-<Habitants>{{print habitants;}}<\Habitants>
-<Maire>{{print maire;}}<\Maire>
+<Maire>{{for i in maire do
+            print i;
+            endfor;}}<\Maire>
 <Magasin>{{print 'Lidl';}}<\Magasin>
