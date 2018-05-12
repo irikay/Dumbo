@@ -1,9 +1,16 @@
-<Maire>{{for i in maire do
-            for a in maire do
-                print ' caca ';
-                print i;
-                   endfor;
-            endfor;
-         print 'a'.'b'.'c'.ville;
-         }}<\Maire>
-<Magasin>{{print 'Lidl';}}<\Magasin>
+<html>
+   <head><title>{{ print nom; }}</title></head>
+   <body>
+      <h1>{{ print nom; }}</h1>
+      {{
+         i := 0;
+         for a in listephoto do
+           print '<a href ="'.a.'">'.a.'</a>';
+           i := i + 1;
+         endfor;
+      }}
+   <br />
+   <br />
+   Il y a {{ print i; }} photos dans l album "{{ print nom; }}".
+   </body>
+</html>

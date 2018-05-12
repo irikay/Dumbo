@@ -1,5 +1,4 @@
 {{
-ville := 'ISSOU';
-habitants := '3000000';
-maire := (' Risitas ', ' Jesus ', ' Chancla ');
+label := 'realises par Tony Kaye';
+liste_label := ('American History X', 'Snowblind', 'Lake of Fire');
 }}

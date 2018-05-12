@@ -22,7 +22,9 @@ operations = {
     '>': lambda x, y: x > y,
     '>=': lambda x, y: x >= y,
     '<': lambda x, y: x < y,
-    '<=': lambda x, y: x <= y
+    '<=': lambda x, y: x <= y,
+    'or': lambda x, y: x or y,
+    'and': lambda x, y: x and y
 }
 
 precedence = (
@@ -83,22 +85,69 @@ def p_expression_for_var(p):
     '''expression : FOR VARIABLE IN VARIABLE DO expressionslist ENDFOR'''
     p[0] = For(p[2], Variable(p[4]), p[6])
 
-#def p_varinvar_vars(p):
-#    '''varinvar : VARIABLE IN VARIABLE'''
-#    #global tmp
-#    tmp = p[3][1]
-#    t = list(tmp)
-#    p[0] = (p[1][0],t)
+def p_expression_if(p):
+    '''expression : IF booleanexpr DO expressionslist ENDIF'''
+    if p[2]:
+        p[0] = p[4]
+    else:
+        p[0] = NullExpr()
 
-def p_expression_strexpr(p):
+def p_expression_strexpr_assign(p):
     '''expression : VARIABLE ASSIGN stringexpression'''
     tmp = p[3].getValue()
     p[0] = VariableAssignation(Variable(p[1]).name, tmp)
 
-def p_expression_strlist(p):
+def p_expression_bool_assign(p):
+    '''expression : VARIABLE ASSIGN booleanexpr'''
+    tmp = p[3]
+    p[0] = VariableAssignation(Variable(p[1]).name, tmp)
+
+def p_expression_int_assign(p):
+    '''expression : VARIABLE ASSIGN intexpr'''
+    tmp = p[3]
+    p[0] = VariableAssignation(Variable(p[1]).name, tmp)
+
+def p_expression_strlist_assign(p):
     '''expression : VARIABLE ASSIGN stringlist'''
     tmp = p[3].getValue()
     p[0] = VariableAssignation(Variable(p[1]).name, tmp)
+
+# Boolean Expression
+
+def p_booleanexpr_var(p):
+    '''booleanexpr : VARIABLE'''
+    p[0] = Variable(p[1]).getValue()
+
+def p_booleanexpr_bool(p):
+    '''booleanexpr : BOOLEAN'''
+    if p[1] == "true":
+        p[0] = True
+    else:
+        p[0] = False
+
+def p_booleanexpr_booleans(p):
+    '''booleanexpr : booleanexpr BOOL_OP booleanexpr
+                   | booleanexpr BOOL_OP intexpr
+                   | intexpr BOOL_OP booleanexpr
+                   | intexpr BOOL_OP intexpr
+                   | booleanexpr OR booleanexpr
+                   | booleanexpr AND booleanexpr'''
+    p[0] = operations[p[2]](p[1], p[3])
+
+# Integer Expression
+
+def p_intexpr_var(p):
+    '''intexpr : VARIABLE'''
+    p[0] = Variable(p[1]).getValue()
+
+def p_intexpr_int(p):
+    '''intexpr : INTEGER'''
+    p[0] = int(p[1])
+
+def p_intexpr_int_op(p):
+    '''intexpr :  intexpr ADD_OP intexpr
+                | intexpr MULT_OP intexpr'''
+    p[0] = operations[p[2]](p[1], p[3])
 
 # String Expression
 
@@ -162,6 +211,15 @@ class String(Expr):
     def getValue(self):
         return self.value
 
+class Concat(Expr):
+    def __init__(self, str1, str2):
+        self.str1 = str1
+        self.str2 = str2
+        self.type = "concat"
+
+    def getValue(self):
+        return self.str1.getValue() + self.str2.getValue()
+
 class StringList(Expr):
     def __init__(self, value, value2):
         self.type = "strlist"
@@ -216,13 +274,11 @@ class ExpressionList(Expr):
     def getValue(self):
         return self.value
 
-    def translate(self, v = None):
+    def translate(self):
         str = ""
         for i in self.value:
-            if v is not None:
-                str += i.translate()
-            else:
-                str += i.translate()
+            print(self.value)
+            str += i.translate()
         return str
 
 class ExprPrint(Expr):
@@ -235,9 +291,17 @@ class ExprPrint(Expr):
             return self.value.getValue()
         elif self.value.type == "var":
             if self.value.name in tmp:
-                return ''.join(str(e) for e in tmp[self.value.name])
+                if isinstance(tmp[self.value.name], int):
+                    return str(tmp[self.value.name])
+                else:
+                    return ''.join(str(e) for e in tmp[self.value.name])
             elif self.value.name in datas:
-                return ''.join(str(e) for e in datas[self.value.name])
+                if isinstance(datas[self.value.name], int):
+                    return str(datas[self.value.name])
+                else:
+                    return ''.join(str(e) for e in datas[self.value.name])
+            else:
+                return ""
         elif self.value.type == "concat":
             return self.value.getValue()
         else:
@@ -261,15 +325,19 @@ class For(Expr):
                 tmp = t
         return str
 
-class Concat(Expr):
-    def __init__(self, str1, str2):
-        self.str1 = str1
-        self.str2 = str2
-        self.type = "concat"
+class If(Expr):
+    def __init__(self, exprs):
+        self.exprs = exprs
 
-    def getValue(self):
-        return self.str1.getValue() + self.str2.getValue()
+    def translate(self):
+        return self.exprs.translate()
 
+class NullExpr(Expr):
+    def __init__(self):
+        self.type = "null"
+
+    def translate(self):
+        return ""
 
 
 ##############################################
@@ -280,7 +348,7 @@ def interpreter(data0, template0, output0):
     global output, datas, template
     output = output0
     d =  parser.parse(data0.read())
-
+    print(datas)
     print("AAAAAAA")
     template = parser.parse(template0.read(), debug = False)
     print(template)
