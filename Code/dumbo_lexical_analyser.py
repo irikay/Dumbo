@@ -100,7 +100,6 @@ def t_inCode_CLOSE_PAR(t):
     #global tmp
     global inListe
     inListe = False
-    #variables[tmp[0]] = tmp[1:]
     return t
 
 def t_inCode_BOOL_OP(t):

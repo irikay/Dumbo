@@ -1,4 +1,6 @@
 <Maire>{{for i in maire do
-            print i;
+            for a in maire do
+                print i;
+                   endfor;
             endfor;}}<\Maire>
 <Magasin>{{print 'Lidl';}}<\Magasin>

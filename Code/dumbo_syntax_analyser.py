@@ -45,7 +45,7 @@ def p_programme_dumbloc(p):
     '''programme : dumbloc
                   | dumbloc programme'''
     if len(p) == 3:
-        p[0] = ''.join(str(e) for e in p[1]) + p[2]
+        p[0] = p[1].translate() + p[2]#''.join(str(e) for e in p[1]) + p[2]
     else:
         p[0] = p[1]
 
@@ -61,15 +61,15 @@ def p_expressionslist_expression(p):
     '''expressionslist : expression SEMICOLON
                        | expression SEMICOLON expressionslist'''
     if len(p) == 4:
-        p[0] = [p[1]] + p[3]
+        p[0] = ExpressionList(p[1], p[3])
     else:
-        p[0] = [p[1]]
+        p[0] = ExpressionList(p[1], None)
 
 # Expression
 
 def p_expression_print(p):
     '''expression : PRINT stringexpression'''
-    p[0] = p[2]
+    p[0] = ExprPrint(p[2])
 
 def p_expression_for_strlist(p):
     '''expression : FOR VARIABLE IN stringlist DO expressionslist ENDFOR'''
@@ -80,52 +80,45 @@ def p_expression_for_strlist(p):
     p[0] = tmp_str
 
 def p_expression_for_var(p):
-    '''expression : FOR varinvar DO expressionslist ENDFOR'''
+    '''expression : FOR VARIABLE IN VARIABLE DO expressionslist ENDFOR'''
+    p[0] = For(p[2], Variable(p[4]), p[6])
+    '''
     global tmp_str
     tmp_str = ""
-    for i in range(0,  len(p[2])):
-        tmp_str += ''.join(str(e) for e in p[4])
+    name = p[2][0]
+    liste =  p[2][1]
+    print(liste)
+    for i in range(0,  len(liste)):
+        tmp_str +=  "" + p[4].translate((name,liste[i]))
     p[0] = tmp_str
+    '''
 
-def p_varinvar_vars(p):
-    '''varinvar : VARIABLE IN VARIABLE'''
-    global tmp
-    tmp[p[1]] = datas[p[3]]
-    t = list(tmp[p[1]])
-    p[0] = t
+#def p_varinvar_vars(p):
+#    '''varinvar : VARIABLE IN VARIABLE'''
+#    #global tmp
+#    tmp = p[3][1]
+#    t = list(tmp)
+#    p[0] = (p[1][0],t)
 
 def p_expression_strexpr(p):
     '''expression : VARIABLE ASSIGN stringexpression'''
-    global datas
-    datas[p[1]] = p[3]
-    p[0] = p[3]
+    tmp = p[3].getValue()
+    p[0] = VariableAssignation(Variable(p[1]).getValue(), tmp)
 
 def p_expression_strlist(p):
     '''expression : VARIABLE ASSIGN stringlist'''
-    global datas
-    l_tmp = p[3]
-    datas[p[1]] = l_tmp
-    p[0] = p[3]
+    tmp = p[3].getValue()
+    p[0] = VariableAssignation(Variable(p[1]).getValue(), tmp)
 
 # String Expression
 
 def p_stringexpression_var(p):
     '''stringexpression : VARIABLE'''
-    if p[1] in tmp:
-        t = tmp[p[1]]
-        t2 = t.pop(0)
-        tmp[p[1]] = t
-        #if len(tmp[p[1]]) == 0:
-            #
-        p[0] = t2
-    elif p[1] in datas:
-        p[0] = datas[p[1]]
-    else:
-        p[0] = p[1]
+    p[0] = Variable(p[1])
 
 def p_stringexpression_string(p):
     '''stringexpression : string'''
-    p[0] = p[1]
+    p[0] = String(p[1].getValue())
 
 def p_stringexpression_string_concat(p):
     '''stringexpression : stringexpression DOT stringexpression'''
@@ -143,20 +136,134 @@ def p_stringlistinterior_list(p):
     '''stringlistinterior : string
                           | string COMMA stringlistinterior'''
     if len(p) == 4:
-        p[0] = [p[1]] + (p[3])
+        p[0] = StringList(p[1].getValue(), p[3]) #[p[1]] + (p[3])
     else:
-        p[0] = [p[1]]
+        p[0] = StringList(p[1].getValue(), None)
 
 
 # Values
 
 def p_string_str(p):
     '''string : APOSTROPHE VALUE APOSTROPHE'''
-    p[0] = p[2]
+    p[0] = Value(p[2])
 
 def p_error(p):
     print("Syntax error in input!")
 
+##############################################
+##########       STRUCTURE       #############
+##############################################
+
+class Expr: pass
+
+class Value(Expr):
+    def __init__(self, value):
+        self.type = "value"
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+class String(Expr):
+    def __init__(self, value):
+        self.type = "str"
+        self.value = [value]
+
+    def getValue(self):
+        return self.value
+
+class StringList(Expr):
+    def __init__(self, value, value2):
+        self.type = "strlist"
+        if value2 == None:
+            self.value = [value]
+        else:
+            self.value =  [value] + value2.getValue()
+
+    def getValue(self):
+        return self.value
+
+class Variable(Expr):
+    def __init__(self, value):
+        global datas
+        self.name = value
+        if value in datas:
+            t = datas[value]
+            self.value = t
+        elif value in tmp:
+            self.value = tmp[value]
+        else:
+            self.value = []
+
+    def getValue(self):
+        return self.value
+
+class VariableAssignation(Expr):
+    def __init__(self, var, value):
+        self.type = "expression"
+        global datas
+        if var[0] not in datas:
+            datas[var[0]] = value
+        self.value = value
+
+    def getValue(self):
+        return self.value
+
+class ExpressionList(Expr):
+    def __init__(self, value, value2):
+        self.type = "Expr List"
+        if value2 is not None:
+            self.value = [value] + value2.getValue()
+        else:
+            self.value = [value]
+
+    def getValue(self):
+        return self.value
+
+    def translate(self, v = None):
+        str = ""
+        for i in self.value:
+            if v is not None:
+                str += i.translate(v)
+            else:
+                str += i.translate(" ")
+        return str
+
+class ExprPrint(Expr):
+    def __init__(self, value):
+        self.type = "print"
+        self.value = value
+
+    def translate(self, v = None):
+        if v[0] == self.value.getValue()[0]:
+            return ''.join(str(e) for e in v[1]())
+        elif v[0] != self.value.getValue()[0]:
+            return ''.join(str(e) for e in self.value.getValue())
+        '''
+        if var:
+            return "" + v
+        elif self.value.type == "str":
+            return ''.join(str(e) for e in self.value.getValue())
+        elif self.value.type == "var":
+            return str(self.value.getValue())
+        else:
+            return ""
+        '''
+class For(Expr):
+    def __init__(self, name, args, exprs):
+        self.name = name
+        self.args = args
+        self.exprs = exprs
+
+    def translate(self):
+        str = ""
+        if self.args.type == "var":
+            liste = self.args.getValue()
+            for i in range(0, len(liste)):
+                str += self.exprs.translate(liste[i])
+        return str
+
+##############################################
 
 parser = yacc.yacc(outputdir='generated')
 
@@ -165,6 +272,7 @@ def interpreter(data0, template0, output0):
     output = output0
     d =  parser.parse(data0.read())
 
+    print("AAAAAAA")
     template = parser.parse(template0.read(), debug = False)
     print(template)
     if template is not None:
