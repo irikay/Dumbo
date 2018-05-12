@@ -82,16 +82,6 @@ def p_expression_for_strlist(p):
 def p_expression_for_var(p):
     '''expression : FOR VARIABLE IN VARIABLE DO expressionslist ENDFOR'''
     p[0] = For(p[2], Variable(p[4]), p[6])
-    '''
-    global tmp_str
-    tmp_str = ""
-    name = p[2][0]
-    liste =  p[2][1]
-    print(liste)
-    for i in range(0,  len(liste)):
-        tmp_str +=  "" + p[4].translate((name,liste[i]))
-    p[0] = tmp_str
-    '''
 
 #def p_varinvar_vars(p):
 #    '''varinvar : VARIABLE IN VARIABLE'''
@@ -103,12 +93,12 @@ def p_expression_for_var(p):
 def p_expression_strexpr(p):
     '''expression : VARIABLE ASSIGN stringexpression'''
     tmp = p[3].getValue()
-    p[0] = VariableAssignation(Variable(p[1]).getValue(), tmp)
+    p[0] = VariableAssignation(Variable(p[1]).name, tmp)
 
 def p_expression_strlist(p):
     '''expression : VARIABLE ASSIGN stringlist'''
     tmp = p[3].getValue()
-    p[0] = VariableAssignation(Variable(p[1]).getValue(), tmp)
+    p[0] = VariableAssignation(Variable(p[1]).name, tmp)
 
 # String Expression
 
@@ -122,7 +112,7 @@ def p_stringexpression_string(p):
 
 def p_stringexpression_string_concat(p):
     '''stringexpression : stringexpression DOT stringexpression'''
-    p[0] = p[1] + p[3]
+    p[0] = Concat(p[1], p[3])
 
 # String List
 
@@ -136,7 +126,7 @@ def p_stringlistinterior_list(p):
     '''stringlistinterior : string
                           | string COMMA stringlistinterior'''
     if len(p) == 4:
-        p[0] = StringList(p[1].getValue(), p[3]) #[p[1]] + (p[3])
+        p[0] = StringList(p[1].getValue(), p[3])
     else:
         p[0] = StringList(p[1].getValue(), None)
 
@@ -167,7 +157,7 @@ class Value(Expr):
 class String(Expr):
     def __init__(self, value):
         self.type = "str"
-        self.value = [value]
+        self.value = value
 
     def getValue(self):
         return self.value
@@ -186,6 +176,7 @@ class StringList(Expr):
 class Variable(Expr):
     def __init__(self, value):
         global datas
+        self.type = "var"
         self.name = value
         if value in datas:
             t = datas[value]
@@ -196,14 +187,19 @@ class Variable(Expr):
             self.value = []
 
     def getValue(self):
-        return self.value
+        if self.name in tmp:
+            return tmp[self.name]
+        elif self.name in datas:
+            t = datas[self.name]
+            return  t
+        else:
+            return ""
 
 class VariableAssignation(Expr):
     def __init__(self, var, value):
         self.type = "expression"
         global datas
-        if var[0] not in datas:
-            datas[var[0]] = value
+        datas[var] = value
         self.value = value
 
     def getValue(self):
@@ -224,9 +220,9 @@ class ExpressionList(Expr):
         str = ""
         for i in self.value:
             if v is not None:
-                str += i.translate(v)
+                str += i.translate()
             else:
-                str += i.translate(" ")
+                str += i.translate()
         return str
 
 class ExprPrint(Expr):
@@ -234,21 +230,19 @@ class ExprPrint(Expr):
         self.type = "print"
         self.value = value
 
-    def translate(self, v = None):
-        if v[0] == self.value.getValue()[0]:
-            return ''.join(str(e) for e in v[1]())
-        elif v[0] != self.value.getValue()[0]:
-            return ''.join(str(e) for e in self.value.getValue())
-        '''
-        if var:
-            return "" + v
-        elif self.value.type == "str":
-            return ''.join(str(e) for e in self.value.getValue())
+    def translate(self):
+        if self.value.type == "str":
+            return self.value.getValue()
         elif self.value.type == "var":
-            return str(self.value.getValue())
+            if self.value.name in tmp:
+                return ''.join(str(e) for e in tmp[self.value.name])
+            elif self.value.name in datas:
+                return ''.join(str(e) for e in datas[self.value.name])
+        elif self.value.type == "concat":
+            return self.value.getValue()
         else:
             return ""
-        '''
+
 class For(Expr):
     def __init__(self, name, args, exprs):
         self.name = name
@@ -257,11 +251,26 @@ class For(Expr):
 
     def translate(self):
         str = ""
+        global tmp
         if self.args.type == "var":
             liste = self.args.getValue()
             for i in range(0, len(liste)):
+                t = tmp
+                tmp[self.name] = liste[i]
                 str += self.exprs.translate(liste[i])
+                tmp = t
         return str
+
+class Concat(Expr):
+    def __init__(self, str1, str2):
+        self.str1 = str1
+        self.str2 = str2
+        self.type = "concat"
+
+    def getValue(self):
+        return self.str1.getValue() + self.str2.getValue()
+
+
 
 ##############################################
 

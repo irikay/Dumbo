@@ -15,6 +15,8 @@ reserved = {
     'in' : 'IN',
     'print' : 'PRINT',
     'endfor' : 'ENDFOR',
+    'endif' : 'ENDIF',
+    'if' : 'IF',
     'do' : 'DO',
     'and' : 'AND',
     'or' : 'OR'
@@ -66,6 +68,10 @@ def t_inCode_STOP(t):
     return t
 
 
+def t_inCode_BOOLEAN(t):
+    r'true|false'
+    return t
+
 def t_inCode_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # On vérifie les mots reservé
@@ -76,9 +82,6 @@ def t_inCode_VARIABLE(t):
         variables[t.value] = []
     return t
 
-def t_inCode_BOOLEAN(t):
-    r'true|false'
-    return t
 
 def t_inCode_ASSIGN(t):
     r':='
