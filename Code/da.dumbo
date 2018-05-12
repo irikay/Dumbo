@@ -1,4 +1,4 @@
 {{
-label := 'realises par Tony Kaye';
-liste_label := ('American History X', 'Snowblind', 'Lake of Fire');
+nom := 'Mes plus belles vacances';
+listephoto := ('Mon beau bateau.png', 'Belle maman.png', 'Apero.png', 'Coucher de soleil.png');
 }}

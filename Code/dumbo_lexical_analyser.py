@@ -1,5 +1,4 @@
 import ply.lex as lex
-
 #Pour sauvegarder les nom de variable et sa/ses valeurs
 variables = {}
 tmp = []
@@ -14,6 +13,7 @@ reserved = {
     'for' : 'FOR',
     'in' : 'IN',
     'print' : 'PRINT',
+    'println' : 'PRINTLN',
     'endfor' : 'ENDFOR',
     'endif' : 'ENDIF',
     'if' : 'IF',
@@ -26,7 +26,7 @@ tokens = ['HTLM', 'START', 'STOP',
           'BOOL_OP', 'BOOLEAN',
           'INTEGER', 'ADD_OP', 'MULT_OP',
           'VARIABLE', 'ASSIGN', 'VALUE', 'APOSTROPHE', 'OPEN_PAR', 'CLOSE_PAR',
-          'COMMA', 'SEMICOLON', 'DOT'
+          'COMMA', 'SEMICOLON', 'DOT', 'VAR_BOOL', 'VAR_INT', 'VAR_STR', 'VAR_LIST'
           ] + list(reserved.values())
 
 #Explication
@@ -75,13 +75,20 @@ def t_inCode_BOOLEAN(t):
 def t_inCode_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value,'VARIABLE')    # On vérifie les mots reservé
-    if t.type == 'VARIABLE':
-        global variables
-        #tmp = []
-        #tmp.append(t.value)
-        variables[t.value] = []
+    global variables
+    if t.value in variables:
+        t.type = changeType(variables[t.value])
     return t
 
+def changeType(data):
+    if isinstance(data, bool):
+        return "VAR_BOOL"
+    elif isinstance(data, int):
+        return "VAR_INT"
+    elif isinstance(data, str):
+        return "VAR_STR"
+    elif isinstance(data, list):
+        return "VAR_LIST"
 
 def t_inCode_ASSIGN(t):
     r':='

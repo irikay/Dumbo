@@ -1,16 +1,60 @@
-<html>
-   <head><title>{{ print nom; }}</title></head>
-   <body>
-      <h1>{{ print nom; }}</h1>
-      {{
-         i := 0;
-         for a in listephoto do
-           print '<a href ="'.a.'">'.a.'</a>';
-           i := i + 1;
-         endfor;
-      }}
-   <br />
-   <br />
-   Il y a {{ print i; }} photos dans l album "{{ print nom; }}".
-   </body>
-</html>
+{{
+label := 'realises par Tony Kaye';
+liste_label := ('American History X', 'Snowblind', 'Lake of Fire');
+
+println 'ma bite';
+println label;
+println liste_label;
+
+for var in liste_label
+do
+    println var;
+    for var2 in liste_label
+    do
+        println var2;
+        for var3 in liste_label
+        do
+            println var3;
+        endfor;
+    endfor;
+endfor;
+
+}}
+<Ma bite mdr>
+
+{{
+    a := 51;
+    b := a + 54 - 165 * 16 + 41;
+    c := a + 78 * b;
+
+    println a;
+    println b;
+    println c;
+}}
+
+<oui lol>
+
+{{
+    bool := true;
+    print bool;
+    boolFalse := false;
+    print boolFalse;
+
+    leAndTrue := true and true;
+    print leAndTrue;
+    leAndFalse := false and true;
+    print leAndFalse;
+
+    leOrTrue := true or false;
+    print leOrTrue;
+    leOrFalse := false or false;
+    print leOrFalse;
+
+    multiple := bool and leAndFalse or leOrTrue;
+    print multiple;
+    multiple2 := boolFalse and leAndFalse or leOrTrue;
+    print multiple2;
+
+    non := 5 > 9;
+    print non;
+}}
