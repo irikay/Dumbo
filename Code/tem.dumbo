@@ -5,7 +5,7 @@
       {{
          i := 0;
          println i;
-         for nom in ('A','B','C') do
+         for nom in  listephoto do
            print '<a href ="'.nom.'">'.nom.'</a>';
            i := i + 1;
          endfor;

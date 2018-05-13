@@ -89,6 +89,8 @@ def changeType(data):
         return "VAR_STR"
     elif isinstance(data, list):
         return "VAR_LIST"
+    else:
+        return "VARIABLE"
 
 def t_inCode_ASSIGN(t):
     r':='

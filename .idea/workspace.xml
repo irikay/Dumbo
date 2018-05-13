@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="88c5f148-43d1-4560-84e1-49ad857a9304" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Code/dumbo_lexical_analyser.py" afterPath="$PROJECT_DIR$/Code/dumbo_lexical_analyser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Code/dumbo_syntax_analyser.py" afterPath="$PROJECT_DIR$/Code/dumbo_syntax_analyser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Code/o.dumbo" afterPath="$PROJECT_DIR$/Code/o.dumbo" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Code/tem.dumbo" afterPath="$PROJECT_DIR$/Code/tem.dumbo" />
@@ -19,21 +20,41 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.45460048">
+    <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="da.dumbo" pinned="false" current-in-tab="false">
+          <file leaf-file-name="da.dumbo" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Code/da.dumbo">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="68">
-                  <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+                  <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="data_t2.dumbo" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Examples/data_t2.dumbo">
+          <file leaf-file-name="tem.dumbo" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Code/tem.dumbo">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="289">
+                  <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="o.dumbo" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Code/o.dumbo">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="data_t1.dumbo" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Examples/data_t1.dumbo">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="68">
                   <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
@@ -42,31 +63,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="tem.dumbo" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Code/tem.dumbo">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="204">
-                  <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="template2.dumbo" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Code/template2.dumbo">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="template3.dumbo" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Examples/template3.dumbo">
+          <file leaf-file-name="data_t3.dumbo" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Examples/data_t3.dumbo">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+                  <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
                   <folding />
                 </state>
               </provider>
@@ -75,8 +76,8 @@
           <file leaf-file-name="dumbo_syntax_analyser.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Code/dumbo_syntax_analyser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="344">
-                  <caret line="183" column="0" lean-forward="true" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+                <state relative-caret-position="578">
+                  <caret line="181" column="28" lean-forward="false" selection-start-line="181" selection-start-column="28" selection-end-line="181" selection-end-column="28" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -84,15 +85,25 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="dumbo_lexical_analyser.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Code/dumbo_lexical_analyser.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="510">
+                  <caret line="75" column="28" lean-forward="true" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="28" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
         </leaf>
       </split-first>
       <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+        <leaf>
           <file leaf-file-name="dumbo_syntax_analyser.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Code/dumbo_syntax_analyser.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-965">
-                  <caret line="318" column="0" lean-forward="true" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+                <state relative-caret-position="225">
+                  <caret line="315" column="17" lean-forward="false" selection-start-line="315" selection-start-column="17" selection-end-line="315" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -134,10 +145,10 @@
         <option value="$PROJECT_DIR$/Code/template1.dumbo" />
         <option value="$PROJECT_DIR$/Code/q" />
         <option value="$PROJECT_DIR$/Code/template2.dumbo" />
-        <option value="$PROJECT_DIR$/Code/dumbo_lexical_analyser.py" />
-        <option value="$PROJECT_DIR$/Code/dumbo_syntax_analyser.py" />
         <option value="$PROJECT_DIR$/Code/da.dumbo" />
+        <option value="$PROJECT_DIR$/Code/dumbo_lexical_analyser.py" />
         <option value="$PROJECT_DIR$/Code/tem.dumbo" />
+        <option value="$PROJECT_DIR$/Code/dumbo_syntax_analyser.py" />
       </list>
     </option>
   </component>
@@ -165,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -207,7 +219,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -495,7 +506,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1787649" sideWeight="0.5068493" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17768148" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22860238" sideWeight="0.49315068" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22860238" sideWeight="0.49315068" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26218852" sideWeight="0.4926238" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -513,7 +524,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -726,13 +739,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Code/dumbo_lexer.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35-32/Lib/site-packages/ply/lex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Examples/test.dumbo">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -757,13 +763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Examples/data_t3.dumbo">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Code/dumbo_interpreter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -775,7 +774,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -783,23 +781,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="241" column="0" lean-forward="false" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Code/dumbo_lexical_analyser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1327">
-          <caret line="52" column="14" lean-forward="false" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Examples/data_t1.dumbo">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -807,6 +788,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="11" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Examples/output3.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Code/q">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Code/template2.dumbo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35-32/Lib/site-packages/ply/lex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="362" column="0" lean-forward="false" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Examples/data_t2.dumbo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -819,18 +837,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Examples/output3.txt">
+    <entry file="file://$PROJECT_DIR$/Examples/data_t3.dumbo">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="2" lean-forward="true" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Code/q">
+    <entry file="file://$PROJECT_DIR$/Code/dumbo_lexical_analyser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="510">
+          <caret line="75" column="28" lean-forward="true" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Code/tem.dumbo">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -843,45 +869,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Code/dumbo_syntax_analyser.py">
+    <entry file="file://$PROJECT_DIR$/Examples/data_t1.dumbo">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="183" column="0" lean-forward="true" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Code/da.dumbo">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Examples/data_t2.dumbo">
+    <entry file="file://$PROJECT_DIR$/Code/dumbo_syntax_analyser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Code/template2.dumbo">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Code/tem.dumbo">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-          <folding />
+        <state relative-caret-position="225">
+          <caret line="315" column="17" lean-forward="false" selection-start-line="315" selection-start-column="17" selection-end-line="315" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
