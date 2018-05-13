@@ -47,7 +47,9 @@ def p_programme_dumbloc(p):
     '''programme : dumbloc
                   | dumbloc programme'''
     if len(p) == 3:
-        p[0] = p[1].translate() + p[2]#''.join(str(e) for e in p[1]) + p[2]
+        str = p[1].translate()
+        str += p[2]
+        p[0] = str
     else:
         p[0] = p[1].translate()
 
@@ -308,7 +310,6 @@ class VariableAssignation(Expr):
         self.type = "expression"
         self.var = var
         self.value = value
-        print(value)
         global variables
         if isinstance(value, Bool) or isinstance(value, Int):
             variables[var] = value.getValue()
@@ -320,16 +321,10 @@ class VariableAssignation(Expr):
 
     def translate(self):
         global variables
-        print("Réasign: ")
-        print( self.value)
-        if isinstance(self.value, Int):
+        if isinstance(self.value, Int) or isinstance(self.value, Bool):
             variables[self.var] = self.value.getValue()
-            print("Valeur assign:")
-            print(self.value.getValue())
         else:
             variables[self.var] = self.value
-            print("Valeur assign:")
-            print(self.value)
         return ""
 
 class ExpressionList(Expr):
@@ -355,6 +350,7 @@ class ExprPrint(Expr):
         self.value = value
 
     def translate(self):
+        print(variables)
         if self.value.type == "str":
             return self.value.getValue()
         elif self.value.type == "var":
@@ -369,6 +365,7 @@ class ExprPrint(Expr):
                 if isinstance(variables[self.value.name], Int):
                     return str(variables[self.value.name].getValue)
                 elif isinstance(variables[self.value.name], int):
+                    print("a")
                     return str(variables[self.value.name])
                 else:
                     return ''.join(str(e) for e in variables[self.value.name])
@@ -385,6 +382,7 @@ class ExprPrintln(Expr):
         self.value = value
 
     def translate(self):
+        print(variables)
         if self.value.type == "str":
             return self.value.getValue() + "\n"
         elif self.value.type == "var":
@@ -420,7 +418,6 @@ class For(Expr):
         global tmp
         if self.args.type == "var" or self.args.type == "strlist":
             liste = self.args.getValue()
-            print(list)
             for i in range(0, len(liste)):
                 t = tmp
                 tmp[self.name] = liste[i]
@@ -488,7 +485,7 @@ def interpreter(data0, template0, output0):
     output = output0
     d =  parser.parse(data0.read())
     print("AAAAAAA")
-    template = parser.parse(template0.read(), debug = True)
+    template = parser.parse(template0.read(), debug = False)
     print(template)
     if template is not None:
         output0.write(template)

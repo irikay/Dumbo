@@ -9,6 +9,8 @@
            print '<a href ="'.nom.'">'.nom.'</a>';
            i := i + 1;
          endfor;
+         println 'a';
+         println i;
       }}
    <br />
    <br />
