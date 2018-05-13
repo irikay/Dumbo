@@ -90,15 +90,19 @@ def p_expression_println2(p):
     p[0] = ExprPrintln(Variable(p[2]))
 
 def p_expression_for_strlist(p):
-    '''expression : FOR VARIABLE IN stringlist DO expressionslist ENDFOR'''
-    global tmp_str, tmp_var
-    tmp_str = ""
-    for i in range(0, len(p[4])):
-        tmp_str += p_expressionslist_expression(p[4][i])
-    p[0] = tmp_str
+    '''expression : FOR VARIABLE IN stringlist DO expressionslist ENDFOR
+                  | FOR VAR_INT IN stringlist DO expressionslist ENDFOR
+                  | FOR VAR_STR IN stringlist DO expressionslist ENDFOR
+                  | FOR VAR_LIST IN stringlist DO expressionslist ENDFOR
+                  | FOR VAR_BOOL IN stringlist DO expressionslist ENDFOR'''
+    p[0] = For(p[2], p[4], p[6])
 
 def p_expression_for_var(p):
-    '''expression : FOR VARIABLE IN VAR_LIST DO expressionslist ENDFOR'''
+    '''expression : FOR VARIABLE IN VAR_LIST DO expressionslist ENDFOR
+                  | FOR VAR_INT IN VAR_LIST DO expressionslist ENDFOR
+                  | FOR VAR_STR IN VAR_LIST DO expressionslist ENDFOR
+                  | FOR VAR_LIST IN VAR_LIST DO expressionslist ENDFOR
+                  | FOR VAR_BOOL IN VAR_LIST DO expressionslist ENDFOR'''
     p[0] = For(p[2], Variable(p[4]), p[6])
 
 def p_expression_if(p):
@@ -107,6 +111,7 @@ def p_expression_if(p):
         p[0] = p[4]
     else:
         p[0] = NullExpr()
+
 
 def p_expression_strexpr_assign(p):
     '''expression : VARIABLE ASSIGN stringexpression
@@ -197,7 +202,14 @@ def p_stringexpression_string(p):
     p[0] = String(p[1].getValue())
 
 def p_stringexpression_string_concat(p):
-    '''stringexpression : stringexpression DOT stringexpression'''
+    '''stringexpression : stringexpression DOT stringexpression
+                        |  VARIABLE DOT VARIABLE
+                        |  stringexpression DOT VARIABLE
+                        |  VARIABLE DOT stringexpression'''
+    if isinstance(p[1], str):
+        p[1] = Variable(p[1])
+    if isinstance(p[3], str):
+        p[3] = Variable(p[3])
     p[0] = Concat(p[1], p[3])
 
 # String List
@@ -293,15 +305,20 @@ class Variable(Expr):
 class VariableAssignation(Expr):
     def __init__(self, var, value):
         self.type = "expression"
-        global variables
-        variables[var] = value
+        self.var = var
         self.value = value
+        variables[var] = value
+        print(value)
+        print(var)
+        global variables
+
 
     def getValue(self):
         return self.value
 
     def translate(self):
-
+        global variables
+        variables[self.var] = self.value
         return ""
 
 class ExpressionList(Expr):
@@ -382,13 +399,15 @@ class For(Expr):
     def translate(self):
         str = ""
         global tmp
-        if self.args.type == "var":
+        if self.args.type == "var" or self.args.type == "strlist":
             liste = self.args.getValue()
+            print(list)
             for i in range(0, len(liste)):
                 t = tmp
                 tmp[self.name] = liste[i]
                 str += self.exprs.translate()
                 tmp = t
+
         return str
 
 class If(Expr):
