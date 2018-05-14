@@ -110,7 +110,7 @@ def p_expression_for_var(p):
 def p_expression_if(p):
     '''expression : IF booleanexpr DO expressionslist ENDIF'''
     if p[2].getValue():
-        p[0] = p[4]
+        p[0] = If(p[4])
     else:
         p[0] = NullExpr()
 
@@ -187,7 +187,6 @@ def p_intexpr_int_op(p):
     '''intexpr :  intexpr ADD_OP intexpr
                 | intexpr MULT_OP intexpr'''
     p[0] = Int(p[1], p[2], p[3])
-        #operations[p[2]](p[1], p[3])
 
 # String Expression
 
@@ -205,10 +204,7 @@ def p_stringexpression_string(p):
     p[0] = String(p[1].getValue())
 
 def p_stringexpression_string_concat(p):
-    '''stringexpression : stringexpression DOT stringexpression
-                        |  VARIABLE DOT VARIABLE
-                        |  stringexpression DOT VARIABLE
-                        |  VARIABLE DOT stringexpression'''
+    '''stringexpression : stringexpression DOT stringexpression'''
     if isinstance(p[1], str):
         p[1] = Variable(p[1])
     if isinstance(p[3], str):
@@ -350,7 +346,6 @@ class ExprPrint(Expr):
         self.value = value
 
     def translate(self):
-        print(variables)
         if self.value.type == "str":
             return self.value.getValue()
         elif self.value.type == "var":
@@ -362,10 +357,11 @@ class ExprPrint(Expr):
                 else:
                     return ''.join(str(e) for e in variables[self.value.name])
             elif self.value.name in variables:
-                if isinstance(variables[self.value.name], Int):
+                if isinstance(variables[self.value.name], Int) or isinstance(variables[self.value.name], Bool):
                     return str(variables[self.value.name].getValue)
                 elif isinstance(variables[self.value.name], int):
-                    print("a")
+                    print(variables[self.value.name])
+                    print(variables)
                     return str(variables[self.value.name])
                 else:
                     return ''.join(str(e) for e in variables[self.value.name])
@@ -382,7 +378,6 @@ class ExprPrintln(Expr):
         self.value = value
 
     def translate(self):
-        print(variables)
         if self.value.type == "str":
             return self.value.getValue() + "\n"
         elif self.value.type == "var":
@@ -392,7 +387,7 @@ class ExprPrintln(Expr):
                 else:
                     return ''.join(str(e) for e in tmp[self.value.name]) + "\n"
             elif self.value.name in variables:
-                if isinstance(variables[self.value.name], Int):
+                if isinstance(variables[self.value.name], Int) or isinstance(variables[self.value.name], Bool):
                     return str(variables[self.value.name].getValue()) + "\n"
                 elif isinstance(variables[self.value.name], int):
                     return str(variables[self.value.name]) + "\n"
@@ -410,8 +405,7 @@ class For(Expr):
         self.name = name
         self.args = args
         self.exprs = exprs
-        global tmp
-        tmp[name] = self.args
+        self.tmp = list(tmp)
 
     def translate(self):
         str = ""
@@ -419,10 +413,9 @@ class For(Expr):
         if self.args.type == "var" or self.args.type == "strlist":
             liste = self.args.getValue()
             for i in range(0, len(liste)):
-                t = tmp
                 tmp[self.name] = liste[i]
                 str += self.exprs.translate()
-                tmp = t
+        tmp = self.tmp
         return str
 
 class If(Expr):
@@ -484,7 +477,6 @@ def interpreter(data0, template0, output0):
     global output, variables, template
     output = output0
     d =  parser.parse(data0.read())
-    print("AAAAAAA")
     template = parser.parse(template0.read(), debug = False)
     print(template)
     if template is not None:

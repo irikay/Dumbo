@@ -4,10 +4,11 @@
       <h1>{{ print nom; }}</h1>
       {{
          i := 0;
-         for a in listephoto do
-           print '<a href ="'.a.'">'.a.'</a>';
+         for nom in listephoto do
+           print '<a href ="'.nom.'">'.nom.'</a>';
            i := i + 1;
          endfor;
+         println 'il y a  '.i.' photos dans l'album '.nom;
       }}
    <br />
    <br />
